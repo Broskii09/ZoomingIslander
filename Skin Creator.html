@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)https://zoomingislander.com/skincreator -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" href="https://zoomingislander.com/stats/favicon.ico">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Creator</title>
+    <link href="./Skin Creator_files/css2" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            color: #ffffff;
+            text-align: center;
+            background-color: #0b0c10;
+        }
+
+        body {
+            background: linear-gradient(45deg, #1f1c2c, #928dab, #1f4037);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            font-size: 4.2rem;
+            margin-bottom: 50px;
+            color: #66fcf1;
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.6);
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .input-group input[type="number"] {
+            width: 70px;
+            font-size: 1.2rem;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .input-group input[type="color"] {
+            width: 50px;
+            height: 50px;
+            margin-left: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button {
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: #66fcf1;
+            color: #0b0c10;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #45a29e;
+        }
+
+        .output-container {
+            margin-top: 40px;
+            width: 80%;
+            max-width: 800px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.7);
+            position: relative;
+        }
+
+        .output-container pre {
+            font-size: 1.2rem;
+            color: #ffffff;
+            text-align: left;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .copy-button {
+            font-size: 1rem;
+            padding: 5px 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            background-color: #66fcf1;
+            color: #0b0c10;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background-color: #45a29e;
+        }
+
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #66fcf1;
+            background-color: #0b0c10;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <a href="https://zoomingislander.com/" style="text-decoration: none; color: inherit;">
+        <h1>Skin Creator</h1>
+    </a>
+    <h2>Patreon's Only</h2>
+	
+    <a href="https://guide.zoomingislander.com/custom-skins" style="text-decoration: none;">
+        <h2>Skin Guide</h2>
+    </a>
+	
+    <div id="color-inputs">
+        <div class="input-group">
+            <label for="md-color">Male Color:</label>
+            <input type="color" id="md-color" value="#000000">
+        </div>
+
+        <div class="input-group">
+            <label for="f-color">High Color:</label>
+            <input type="color" id="f-color" value="#000000">
+        </div>
+
+        <div class="input-group">
+            <label for="m-color">Mid Color:</label>
+            <input type="color" id="m-color" value="#000000">
+        </div>
+
+        <div class="input-group">
+            <label for="d1-color">Mid 2 Color:</label>
+            <input type="color" id="d1-color" value="#000000">
+        </div>
+
+        <div class="input-group">
+            <label for="b-color">Low Color:</label>
+            <input type="color" id="b-color" value="#000000">
+        </div>
+
+        <div class="input-group">
+            <label for="u-color">Bottom Color:</label>
+            <input type="color" id="u-color" value="#000000">
+        </div>
+
+        <div class="input-group">
+            <label for="e-color">Eyes Color:</label>
+            <input type="color" id="e-color" value="#000000">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label for="sv">Marks (0 or 1):</label>
+        <input type="number" id="sv" min="0" value="0">
+    </div>
+
+    <div class="input-group">
+        <label for="pi">Pattern (0,1,2):</label>
+        <input type="number" id="pi" min="0" value="0">
+    </div>
+
+    <button class="button" onclick="generateOutput()">Generate JSON</button>
+    <button class="button" onclick="randomizeColors()">Randomize Colors</button>
+
+    <div id="json-input-container">
+        <textarea id="paste-json" placeholder="Paste your JSON here"></textarea>
+        <button class="button" id="load-json-button" onclick="loadFromJson()">Load from JSON</button>
+	</div>
+
+    <div class="output-container" id="output-container" style="display: none;">
+        <h2>Generated JSON</h2>
+        <button class="copy-button" onclick="copyToClipboard()">Copy</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function hexToRgb(hex) {
+            const bigint = parseInt(hex.slice(1), 16);
+            const r = (bigint >> 16) & 255;
+            const g = (bigint >> 8) & 255;
+            const b = bigint & 255;
+            return { r, g, b };
+        }
+
+        function rgbToLinear(rgb) {
+            return {
+                r: Math.pow(rgb.r / 255, 2.2),
+                g: Math.pow(rgb.g / 255, 2.2),
+                b: Math.pow(rgb.b / 255, 2.2)
+            };
+        }
+
+        function randomizeColors() {
+            const colorIds = ['md-color', 'm-color', 'b-color', 'f-color', 'u-color', 'd1-color', 'e-color'];
+            colorIds.forEach(id => {
+                const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
+                document.getElementById(id).value = randomColor;
+            });
+        }
+
+        function generateOutput() {
+		    document.getElementById('json-input-container').style.display = 'none';
+            document.getElementById('load-json-button').style.display = 'none';
+            const data = {
+                'sv': document.getElementById('sv').value,
+                'pi': document.getElementById('pi').value,
+                'md': rgbToLinear(hexToRgb(document.getElementById('md-color').value)),
+                'm': rgbToLinear(hexToRgb(document.getElementById('m-color').value)),
+                'b': rgbToLinear(hexToRgb(document.getElementById('b-color').value)),
+                'f': rgbToLinear(hexToRgb(document.getElementById('f-color').value)),
+                'u': rgbToLinear(hexToRgb(document.getElementById('u-color').value)),
+                'd1': rgbToLinear(hexToRgb(document.getElementById('d1-color').value)),
+                'e': rgbToLinear(hexToRgb(document.getElementById('e-color').value)),
+            };
+
+            const output = `{
+'sv': ${data.sv}, 
+'pi': ${data.pi}, 
+'md': ${formatColor(data.md)}, 
+'m': ${formatColor(data.m)}, 
+'b': ${formatColor(data.b)}, 
+'f': ${formatColor(data.f)}, 
+'u': ${formatColor(data.u)}, 
+'d1': ${formatColor(data.d1)}, 
+'e': ${formatColor(data.e)}
+}`;
+
+            document.getElementById('output').textContent = output;
+            document.getElementById('output-container').style.display = 'block';
+        }
+
+        function formatColor(color) {
+            return `'X=${color.r.toFixed(3)},Y=${color.g.toFixed(3)},Z=${color.b.toFixed(3)}'`;
+        }
+
+        function copyToClipboard() {
+            const output = document.getElementById('output').textContent;
+            navigator.clipboard.writeText(output).then(() => {
+                alert('JSON copied to clipboard!');
+            });
+        }
+
+        function loadFromJson() {
+        try {
+            let jsonString = document.getElementById('paste-json').value;
+
+            jsonString = jsonString.replace(/'/g, '"');
+
+            const json = JSON.parse(jsonString);
+
+            document.getElementById('sv').value = json.sv;
+            document.getElementById('pi').value = json.pi;
+
+            document.getElementById('md-color').value = linearColorToHex(json.md);
+            document.getElementById('m-color').value = linearColorToHex(json.m);
+            document.getElementById('b-color').value = linearColorToHex(json.b);
+            document.getElementById('f-color').value = linearColorToHex(json.f);
+            document.getElementById('u-color').value = linearColorToHex(json.u);
+            document.getElementById('d1-color').value = linearColorToHex(json.d1);
+            document.getElementById('e-color').value = linearColorToHex(json.e);
+            document.getElementById('json-input-container').style.display = 'none';
+            document.getElementById('load-json-button').style.display = 'none';
+        } catch (error) {
+            alert('Invalid JSON format');
+            console.error(error);
+        }
+		}
+
+		function linearColorToHex(linearColor) {
+			const matches = linearColor.match(/X=([0-9.]+),Y=([0-9.]+),Z=([0-9.]+)/);
+			if (!matches) return '#000000'; 
+
+			const r = Math.min(Math.max(0, Math.round(parseFloat(matches[1]) * 255)), 255);
+			const g = Math.min(Math.max(0, Math.round(parseFloat(matches[2]) * 255)), 255);
+			const b = Math.min(Math.max(0, Math.round(parseFloat(matches[3]) * 255)), 255);
+
+			return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+		}
+
+        function rgbToHex(rgb) {
+            const r = Math.min(Math.max(0, Math.round(Math.pow(rgb.r, 1 / 2.2) * 255)), 255);
+            const g = Math.min(Math.max(0, Math.round(Math.pow(rgb.g, 1 / 2.2) * 255)), 255);
+            const b = Math.min(Math.max(0, Math.round(Math.pow(rgb.b, 1 / 2.2) * 255)), 255);
+            return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+        }
+    </script>
+
+
+</body></html>
